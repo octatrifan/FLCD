@@ -59,40 +59,6 @@ class HashTable:
         pass    
 
 
-class Tests:
-    def test_1(self):
-        hashtable = HashTable(10)
-        hashtable.insert("octa")
-        hashtable.insert("trifan")
-        hashtable.insert("alex")
-        hashtable.insert("ion")
-        hashtable.insert("nelu")
-        assert(hashtable.get_pos("octa")!=-1)
-        assert(hashtable.get_pos("nelu")!=-1)
-        assert(hashtable.get_pos("nimeni")==-1)
-
-
-        print("\nTest 1 passed\n")
-
-    def test_with_print(self): 
-        hashtable = HashTable(10)
-        hashtable.insert("octa")
-        hashtable.insert("trifan")
-        hashtable.insert("alex")
-        hashtable.insert("ion")
-        hashtable.insert("nelu")
-        hashtable.insert("ana")
-
-
-        print(hashtable.data, "\n")
-        print("Octa position: ", hashtable.get_pos("octa"))
-        print("Nelu position: ", hashtable.get_pos("nelu"))
-        print("Nimeni position: ", hashtable.get_pos("nimeni"))    
-
-# tests = Tests()
-# tests.test_1()
-
-
 
 
 
