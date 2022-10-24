@@ -9,9 +9,3 @@ class SymbolTable:
     
     def get_pos(self, value):
         return self.symboltable.get_pos(value)
-
-
-
-
-    
-
