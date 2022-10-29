@@ -1,0 +1,7 @@
+Symbol Table is implemented as a Hash Table
+Pos 0 : 0
+Pos 1 : 1
+Pos 2 : "nr1 is NOT a power of nr2"
+Pos 4 : "nr1 is a power of nr2"
+Pos 5 : nr1
+Pos 9 : nr2

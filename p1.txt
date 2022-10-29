@@ -1,0 +1,10 @@
+string string1 = "octavian alexandru";
+string string2 = "trifan";
+int octa = -1234.32;
+string aux;
+if(length(string1)>=length(string2)){
+aux = string1;
+string1 = string2;
+string2 = aux;
+}
+print(string1);

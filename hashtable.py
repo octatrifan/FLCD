@@ -13,10 +13,9 @@ class HashTable:
     def insert(self, value):
         self.resize()
         hash = self.get_hash(value)
-        while self.data[hash] is not None:
+        while self.data[hash] is not None and self.data[hash]!=value:
             hash+=1
             hash%=self.capacity
-            return hash
 
         self.data[hash] = value
         self.size+=1
@@ -57,6 +56,9 @@ class HashTable:
 
     def resize(self):
         pass    
+
+    def __str__(self) -> str:
+        print(self.data)
 
 
 
