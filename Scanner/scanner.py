@@ -1,8 +1,7 @@
-from lib2to3.pgen2 import token
-from pif import PIF
-from st import SymbolTable
-
-from lexic import Lexic
+import sys
+from Scanner.lexic import Lexic
+from Scanner.data.pif import PIF
+from Scanner.data.st import SymbolTable
 
 
 class Scanner:
@@ -19,7 +18,7 @@ class Scanner:
             print(str(e))    
 
     def run_tokenizer(self, filename):
-        reserved_tokens_file = open("token.in", 'r')
+        reserved_tokens_file = open("Input/token.in", 'r')
         lines = reserved_tokens_file.readlines() 
         for line in lines:
             self.reserved_tokens.append(line.strip())
@@ -58,10 +57,10 @@ class Scanner:
                     self.pif.add_identifier(pos) 
                 i+=1    
 
-        with open('pif.out', 'w') as f:
+        with open('Output/pif.out', 'w') as f:
             for line in self.pif.map:
                 f.write(f"{line}\n")
-        with open('st.out', 'w') as f:
+        with open('Output/st.out', 'w') as f:
             f.write("Symbol Table is implemented as a Hash Table\n")
             for i in range(len(self.st.symboltable.data)):
                 if self.st.symboltable.data[i] is not None:

@@ -1,4 +1,4 @@
-from scanner import Scanner
+from Scanner.scanner import Scanner
 
 scanner = Scanner()
-scanner.run("p2.txt")
+scanner.run("Input/p3.txt")

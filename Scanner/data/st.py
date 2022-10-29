@@ -1,4 +1,6 @@
-from hashtable import HashTable
+
+from Scanner.data.hashtable import HashTable
+
 
 class SymbolTable:
     def __init__(self):
