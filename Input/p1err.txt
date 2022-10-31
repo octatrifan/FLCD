@@ -1,7 +1,7 @@
 integer nr1;
-nr1 = 123^321;
+nr1 = "";
 if(nr1>100){
 print("nr1 is bigger than 100");
 }
- string 1octa;
-print(1octa);
+string octa;
+print(octa);

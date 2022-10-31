@@ -1,4 +1,4 @@
-string string1 = "octavian alexandru";
+string string1 = "octavian alexandru ;
 string string2 = "trifan";
 int octa = -1234.32;
 string aux;

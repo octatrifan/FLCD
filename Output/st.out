@@ -1,9 +1,6 @@
 Symbol Table is implemented as a Hash Table
-Pos 0 : 0
-Pos 1 : 1
-Pos 2 : index
-Pos 3 : 500
-Pos 4 : numbers
-Pos 5 : noOfElems
-Pos 6 : 2
-Pos 8 : noOfEven
+Pos 0 : octa
+Pos 2 : "nr1 is bigger than 100"
+Pos 5 : nr1
+Pos 8 : ""
+Pos 9 : 100

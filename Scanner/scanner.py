@@ -41,7 +41,6 @@ class Scanner:
                         if not self.lexic.check_number(tokens[i-1]) and self.lexic.check_number(tokens[i+1]):
                             pos = self.st.insert((tokens[i]+str(tokens[i+1])))
                             self.pif.add_constant(pos) 
-                            print("Const"+tokens[i]+str(tokens[i+1]))
                             i+=1
                     else:
                         self.pif.add_token(tokens[i])    
