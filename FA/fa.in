@@ -1,0 +1,8 @@
+Q = {q0,q1,q2,qf}
+E = {x,y,z}
+q0 = q0
+F = {qf,q2,q1}
+sigma:
+    (q0,x) -> {q1,q2}
+    (q1,y) -> {q2}
+    (q1,z) -> {qf}
