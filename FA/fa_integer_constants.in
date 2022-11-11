@@ -1,0 +1,8 @@
+Q = {q0,q1,q2,q3}
+E = {letter,digit,_}
+q0 = q0
+F = {q1,q2}
+sigma:
+    (q0,0) -> {q2}
+    (q0,nzdigit) -> {q1}
+    (q1,digit) -> {q1}

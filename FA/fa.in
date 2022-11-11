@@ -3,6 +3,6 @@ E = {x,y,z}
 q0 = q0
 F = {qf,q2,q1}
 sigma:
-    (q0,x) -> {q1,q2}
+    (q0,x) -> {q1}
     (q1,y) -> {q2}
-    (q1,z) -> {qf}
+    (q2,z) -> {qf}

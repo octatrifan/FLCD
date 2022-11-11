@@ -35,7 +35,7 @@ class Lexic:
     def check_constant(self, constant):
         if constant=="false" or constant=="true":
             return True
-        if len(constant)>=2 and constant[0] ==  constant[len(constant)-1] == '"':
+        if len(constant)>=2 and constant[0] == constant[len(constant)-1] == '"':
             return True
         if len(constant) < 1:
             return False

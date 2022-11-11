@@ -1,4 +1,6 @@
 import sys
+
+from FA.fa import FA
 from Scanner.lexic import Lexic
 from Scanner.data.pif import PIF
 from Scanner.data.st import SymbolTable
@@ -10,6 +12,9 @@ class Scanner:
         self.pif = PIF()
         self.lexic = Lexic()
         self.reserved_tokens = []
+        self.integerFA = FA("FA/fa_integer_constants.in")
+        self.identifierFA = FA("FA/fa_identifier.in")
+        self.stringFA = FA("FA/fa_string_constants.in")
 
     def run(self, filename):
         try:
@@ -38,20 +43,25 @@ class Scanner:
                     elif tokens[i]=="-" or tokens[i]=="+":
                         if i==0 or i==len(tokens)-1:
                             raise Exception("Error at line: "+str(line_number)+" Invalid placement of + -")    
-                        if not self.lexic.check_number(tokens[i-1]) and self.lexic.check_number(tokens[i+1]):
+                        # if not self.lexic.check_number(tokens[i-1]) and self.lexic.check_number(tokens[i+1]):
+                        if not self.integerFA.check_sequence_DFA(tokens[i-1]) and self.integerFA.check_sequence_DFA(tokens[i+1]):
                             pos = self.st.insert((tokens[i]+str(tokens[i+1])))
                             self.pif.add_constant(pos) 
                             i+=1
                     else:
                         self.pif.add_token(tokens[i])    
-                elif self.lexic.check_constant(tokens[i]):
+                # elif self.lexic.check_constant(tokens[i]):
+
+                elif self.integerFA.check_sequence_DFA(tokens[i]) or self.stringFA.check_sequence_DFA(tokens[i]):
                     pos = self.st.insert(tokens[i])
                     self.pif.add_constant(pos) 
                 else: 
-                    try:
-                        self.lexic.check_identifier(tokens[i])
-                    except Exception as e:
-                        raise Exception("ERROR at line: "+str(line_number)+" - " + str(e))
+                    # try:
+                    #     self.lexic.check_identifier(tokens[i])
+                    # except Exception as e:
+                    #     raise Exception("ERROR at line: "+str(line_number)+" - " + str(e))
+                    if self.identifierFA.check_sequence_DFA(tokens[i]) is False:
+                        raise Exception("ERROR at line: "+str(line_number)+" - Invalid indentifier " + tokens[i])
                     pos = self.st.insert(tokens[i])
                     self.pif.add_identifier(pos) 
                 i+=1    

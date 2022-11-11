@@ -1,6 +1,5 @@
-from fa_menu import Menu
+from fa import FA
 
-
-menu = Menu()
-# menu.print_menu()
-menu.run_menu()
+fa = FA("fa_string_constants.in")
+# fa.run_menu()
+print(fa.check_sequence_DFA('"octavian alexandru"'))
