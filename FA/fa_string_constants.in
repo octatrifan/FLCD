@@ -1,5 +1,5 @@
 Q = {q0,q1,q2}
-E = {letter,digit,space}
+E = {letter,digit,space,"}
 q0 = q0
 F = {q2}
 sigma:

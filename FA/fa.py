@@ -7,6 +7,8 @@ class FA:
         self.q0 = []
         self.S = []
         self.read_file()
+        if self.validate() is False:
+            print("Invalid File!")
 
     def read_file(self):
         reserved_tokens_file = open(self.filename, 'r')
@@ -21,6 +23,7 @@ class FA:
                 line = line.replace(" ", "")
                 stripped = line.strip()
                 self.q0 = stripped.split("=")[-1]
+                self.q0 = self.q0.replace(" ", "")
 
             if index == 3:
                 self.F = self.read_line(line)
@@ -97,7 +100,7 @@ class FA:
 
     def menu_check_sequence_DFA(self):
         sequence = input("Introduce sequence: ")
-        print(self.check_sequence_DFA("1string1"))
+        print(self.check_sequence_DFA(sequence))
 
     def get_next_state(self, initial, transition):
         for elem in self.S:
@@ -109,6 +112,51 @@ class FA:
                 ):
                     return elem[2]
         return None
+
+    def validate(self):
+        if len(set(e for e in self.S if self.S.count(e) > 1)):
+            print("Duplicates!")
+            return False
+
+        if self.q0 not in self.Q:
+            print("Initial state should be in the set of states")
+            return False
+
+        found_match = False
+        for t in self.S:
+            if t[0] == self.q0:
+                found_match = True
+
+        if not found_match:
+            print("Nothing starts from initial state")
+            return False
+
+        for final in self.F:
+            if final not in self.Q:
+                print("Final states should be in the set of states")
+                return False
+            found_match = False
+
+            for t in self.S:
+                if final in t[2]:
+                    found_match = True
+
+            if not found_match:
+                print("Final state unreachable")
+                return False
+
+        for elem in self.S:
+            (initial, transition, result) = elem
+            if initial not in self.Q:
+                print(initial + " not in the set of states")
+                return False
+            if transition not in self.E:
+                print(transition + " not in the alphabet!")
+                return False
+            for res in result:
+                if res not in self.Q:
+                    print(res + " not in set of states")
+                    return False
 
     def run_menu(self):
         self.read_file()
