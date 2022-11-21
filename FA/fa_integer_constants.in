@@ -1,5 +1,5 @@
 Q = {q0,q1,q2,q3}
-E = {letter,digit,_}
+E = {0,nzdigit,digit}
 q0 = q0
 F = {q1,q2}
 sigma:
