@@ -1,6 +1,6 @@
 integer nr1;
 nr1 = "";
-if(nr1>100){
+if(nr1>-100){
 print("nr1 is bigger than 100");
 }
 string octa;
