@@ -66,6 +66,22 @@ class Grammar:
     def print_productions(self):
         print("P = ", self.P)
 
+    def get_productions_for_non_terminal(self, nonterm):
+        if nonterm not in self.N:
+            print("Non terminal " + nonterm + " does not exist in the list of non terminals")
+        for elem in self.P:
+            if ' '.join(elem[0]) == nonterm:
+                return elem[1]
+        return []
+
+    def get_productions_containing_non_terminal(self, nonterm):
+        res = []
+        for prod in self.P:
+            for elem in prod[1]:
+                if nonterm in elem:
+                    res.append((prod[0], elem))
+        return res
+
     def print_productions_for_non_terminal(self):
         nonterm = input("Input the non-terminal: ")
         if nonterm not in self.N:

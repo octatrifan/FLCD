@@ -1,5 +1,5 @@
 N = {<program>,<decl_list>,<declaration>,<compound_stmt>,<primitive_type>,<array_decl>,<type>,<stmt_list>,<stmt>,<simple_stmt>,<assign_stmt>,<expression>,<term>,<factor>,<io_stmt>,<struct_stmt>,<if_stmt>,<while_stmt>,<condition>,<relation>,<constant>,<io_stmt>}
-E = {;,bool,char,integer,string,float,array,[,],(,),{,},=,identifier,nr,constant,+,-,*,/,print,read,if,otherwise,while,integer,float,string,<,<=,=,!=,>=,>}
+E = {;,[,],(,),{,},=,<,<=,=,!=,>=,>,bool,char,integer,string,float,array,identifier,nr,constant,+,-,*,/,print,read,if,otherwise,while,integer,float,string,}
 S = <program>
 P :
 <program> -> <decl_list> <compound_stmt>
