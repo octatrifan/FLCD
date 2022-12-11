@@ -1,0 +1,11 @@
+N = {S,A,B,D}
+E = {e,a,b,epsilon}
+S = S
+P:
+S -> e B b A
+S -> e A
+A -> a
+A -> epsilon
+B -> a
+B -> a D
+D -> b
