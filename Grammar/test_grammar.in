@@ -1,0 +1,6 @@
+N = {A,B}
+E = {;,elem,epsilon}
+S = A
+P:
+A -> elem B
+B -> epsilon | A

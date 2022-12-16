@@ -1,14 +1,14 @@
-integer nr1;
-integer nr2;
-read(nr1);
-read(nr2);
-while(nr1%nr2==0){
-nr1 = nr1 / nr2;
+integer nr1 ;
+integer nr2 ;
+read ( nr1 ) ;
+read ( nr2 ) ;
+while ( nr1 > nr2 ) {
+nr1 = nr1 / nr2 ;
 }
-if(nr1==1){
-print("nr1 is a power of nr2");
+if ( nr1 == 1 ) {
+print ( "powerOfTwo" ) ;
 }
 otherwise
 {
-print("nr1 is NOT a power of nr2");
+print ( "notPowerOfTwo" ) ;
 }

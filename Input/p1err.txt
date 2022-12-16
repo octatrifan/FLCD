@@ -1,7 +1,7 @@
-integer nr1;
-nr1 = "";
-if(nr1>-100){
-print("nr1 is bigger than 100");
+integer nr1 ;
+string octa ;
+nr1 = "" ;
+if ( nr1 > -100 ) {
+print ( "nr1_is_bigger_than_100" ) ;
 }
-string octa;
-print(octa);
+print ( octa ) ;

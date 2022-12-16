@@ -1,15 +1,13 @@
-array int numbers[500];
-integer noOfElems;
-integer index; // default value for integer is 0
-read(noOfElems);
-while(index<noOfElems){
-read(numbers[index]);
-index+=1;
+array integer [ 500 ] numbers ;
+integer noOfElems ;
+integer index ;
+integer noOfEven ;
+read ( noOfElems ) ;
+while ( index < noOfElems ) {
+read ( numbers ) ;
+index = index + 1 ;
 }
-integer noOfEven;
-for(index=0;index<noOfElems;1){
-if(noOfElems[index]%2==0){
-noOfEven+=1;
+if ( noOfElems / 2 == 0 ) {
+noOfEven = noOfEven + 1 ;
 }
-}
-print(noOfEven);
+print ( noOfEven ) ;

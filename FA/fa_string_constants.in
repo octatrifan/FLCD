@@ -1,10 +1,11 @@
 Q = {q0,q1,q2}
-E = {letter,digit,space,"}
+E = {letter,digit,space,_,"}
 q0 = q0
 F = {q2}
 sigma:
     (q0,") -> {q1}
     (q1,letter) -> {q1}
+    (q1,_) -> {q1}
     (q1,digit) -> {q1}
     (q1,space) -> {q1}
     (q1,") -> {q2}

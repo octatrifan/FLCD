@@ -1,0 +1,12 @@
+string octa ;
+string ion32 ;
+integer int_99 ;
+ion352 = -23 ;
+if ( constant >= constant ) {
+ion32 = int_99 ;
+octa = constant ;
+}
+otherwise {
+identifier = identifier ;
+}
+print ( identifier ) ;

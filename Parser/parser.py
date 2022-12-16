@@ -1,13 +1,20 @@
+import re
+
+from FA.fa import FA
 from Grammar.grammar import Grammar
 
 
 class Parser:
-    def __init__(self):
-        self.grammar = Grammar('../Grammar/first_grammar.in')
+    def __init__(self, file):
+        self.temporary = []
+        self.grammar = Grammar(file)
         self.first = {}
         self.follow = {}
         self.parserTable = {}
         self.numberedProductions = []
+        self.identifier_FA = FA("../FA/fa_identifier.in")
+        self.constant_FA = FA("../FA/fa_integer_constants_with_sign.in")
+        self.string_constant_FA = FA("../FA/fa_string_constants.in")
         self.get_all_first()
         self.get_all_follow()
         self.number_productions()
@@ -19,6 +26,7 @@ class Parser:
 
     def get_all_follow(self):
         for non_term in self.grammar.N:
+            self.temporary = []
             self.follow[non_term] = self.get_follow(non_term)
 
     def get_first(self, non_terminal):
@@ -38,15 +46,16 @@ class Parser:
                                 check = False
                         if check is True:
                             try:
-                                for e in self.get_first(rule):
-                                    aux.add(e)
+                                if rule!='epsilon':
+                                    for e in self.get_first(rule):
+                                        aux.add(e)
                             except Exception:
                                 print("Invalid file! Conflict! ", prod)
                                 return
-
         return aux
 
     def get_follow(self, non_terminal):
+        self.temporary.append(non_terminal)
         res = set()
         if non_terminal == self.grammar.S:
             res.add('$')
@@ -66,7 +75,9 @@ class Parser:
                                 res.add(f)
                     else:
                         # print(non_terminal, start)
-                        if start != non_terminal:
+                        if start not in self.temporary:
+                        # if start!=non_terminal:
+                            self.temporary.append(start)
                             for f in self.get_follow(start):
                                 res.add(f)
         return res
@@ -92,18 +103,21 @@ class Parser:
             prod = mainProd[0]
             index = mainProd[1]
             for a in self.get_first_concat(prod[1]):
+
                 if isinstance(a, list):
                     a = tuple(a)
-                if (prod[0][0], a) in self.parserTable.keys():
-                    print("Conflict! M(" + prod[0][0] + "," + a + ")")
                 if a != 'epsilon':
+                    if (prod[0][0], a) in self.parserTable.keys():
+                        print("Conflict! M(" + prod[0][0] + "," + a + ")" + " " + str(self.parserTable[(prod[0][0],a)]) + " " + str(prod[1]) +"," + str(index))
                     self.parserTable[(prod[0][0], a)] = (prod[1], index)
+
             if 'epsilon' in self.get_first_concat(prod[1]):
-                for b in self.get_follow(prod[0][0]):
+                for b in self.follow[prod[0][0]]:
+                # for b in self.get_follow(prod[0][0]):
                     if isinstance(b, list):
                         b = tuple(b)
                     if (prod[0][0], b) in self.parserTable.keys():
-                        print("Conflict! M(" + prod[0][0] + "," + a + ")")
+                        print("Conflict! M(" + prod[0][0] + "," + b + ")")
                     self.parserTable[(prod[0][0], b)] = (prod[1], index)
 
     def analyze_sequence(self, sequence):
@@ -112,16 +126,30 @@ class Parser:
         output = []
 
         input_stack.append("$")
-        sequence = sequence.split(" ")
-        for elem in reversed(sequence):
-            input_stack.append(elem)
+        # sequence = sequence.split("\n")
+        for elem in reversed(sequence.split("\n")):
+            seq = elem.split(" ")
+            for e in reversed(seq):
+                input_stack.append(e)
+            input_stack.append('\n')
+
+        # sequence = [s for s in re.split(r'[\n\s]', sequence) if s]
+        # print("Seq", sequence)
+        # for elem in reversed(sequence):
+        #     input_stack.append(elem)
 
         working_stack.append("$")
         working_stack.append(self.grammar.S)
 
+        line_number = 0
         while input_stack[len(input_stack) - 1] != "$" or working_stack[len(working_stack) - 1] != "$":
             input_top = input_stack[len(input_stack) - 1]
+            if input_top=='\n':
+                input_stack.pop()
+                line_number+=1
+                continue
             working_top = working_stack[len(working_stack) - 1]
+
             if (working_top, input_top) in self.parserTable.keys():
                 value = self.parserTable[(working_top, input_top)]
                 if isinstance(value, tuple) is False and value == "pop":
@@ -136,8 +164,47 @@ class Parser:
                             working_stack.append(prod)
                 output.append(self.parserTable[(working_top, input_top)])
             else:
-                print("Error for " + input_top + " , " + working_top)
-                return output
+                if self.identifier_FA.check_sequence_DFA(input_top):
+                    if (working_top, "identifier") in self.parserTable.keys():
+                        value = self.parserTable[(working_top, "identifier")]
+                        if isinstance(value, tuple) is False and value == "pop":
+                            input_stack.pop()
+                            working_stack.pop()
+                            continue
+                        else:
+                            working_stack.pop()
+                            if value[0] != ['epsilon']:
+                                production = value[0]
+                                for prod in reversed(production):
+                                    working_stack.append(prod)
+                        output.append(self.parserTable[(working_top, "identifier")])
+                        continue
+                    else:
+                        print(
+                            "Error on identifier line " + str(line_number) + " for " + input_top + " , " + working_top)
+                        return output
+                if self.constant_FA.check_sequence_DFA(input_top) or self.string_constant_FA.check_sequence_DFA(input_top):
+                    if (working_top, "constant") in self.parserTable.keys():
+                        value = self.parserTable[(working_top, "constant")]
+                        if isinstance(value, tuple) is False and value == "pop":
+                            input_stack.pop()
+                            working_stack.pop()
+                            continue
+                        else:
+                            working_stack.pop()
+                            if value[0] != ['epsilon']:
+                                production = value[0]
+                                for prod in reversed(production):
+                                    working_stack.append(prod)
+                        output.append(self.parserTable[(working_top, "constant")])
+                    else:
+                        print(
+                            "Error on constant line " + str(line_number) + " for " + input_top + " , " + working_top)
+                        return output
+
+                else:
+                    print("Error on line " + str(line_number) + " for " + input_top + " , " + working_top)
+                    return output
         return output
 
     def get_first_concat(self, list):
